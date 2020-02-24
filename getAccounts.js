@@ -9,6 +9,25 @@ web3.eth.getBlockNumber((err,block) => {
 })
 
 
+/* var subscription = web3.eth.subscribe('logs', {
+    address: '0x29fe7D60DdF151E5b52e5FAB4f1325da6b2bD958',
+}, function(error, result){
+    if (!error)
+        console.log('results: ', result);
+})
+.on("connected", function(subscriptionId){
+    console.log('subscription ID : ', subscriptionId);
+})
+.on("data", function(log){
+    console.log(log);
+})
+.on("changed", function(log){
+});
+subscription.unsubscribe(function(error, success){
+    if(success)
+        console.log('Successfully unsubscribed!');
+}); */
+
 
 
 
