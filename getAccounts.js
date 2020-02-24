@@ -1,4 +1,7 @@
 const Web3 = require ('web3');
+const fs = require('fs');
+
+
 
 let run = async () => {
 
@@ -33,7 +36,14 @@ var options = {
     address: ['0x29fe7D60DdF151E5b52e5FAB4f1325da6b2bD958']
 
 }
- web3.eth.getPastLogs(options).then(console.log).catch(e => console.log(e));
+ web3.eth.getPastLogs(options).then((logs)=>{
+
+    fs.writeFile('output.json', JSON.stringify(logs) ,function (err) {
+        if (err) return console.log(err);
+        console.log('output created.');
+      });
+
+ }).catch(e => console.log(e));
 
 }
 
