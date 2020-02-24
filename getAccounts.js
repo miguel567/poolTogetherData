@@ -2,21 +2,18 @@ const Web3 = require ('web3');
 
 let run = () => {
 
-var eth = new Web3 ('https://mainnet.infura.io/v3/b842c5076ac4499884e201d7948dc9d2');
+var web3 = new Web3 ('https://mainnet.infura.io/v3/b842c5076ac4499884e201d7948dc9d2');
 /* console.log(eth); */
-eth.filter()
-var filter = eth.filter({fromBlock:'9523259', toBlock:'latest', address: "0x29fe7D60DdF151E5b52e5FAB4f1325da6b2bD958"});
-filter.get(function (err, transactions) {
-  transactions.forEach(function (tx) {
-    var txInfo = eth.getTransaction(tx.transactionHash);
-    console.log('GAS ', txInfo.gas, ' FROM: ', txInfo.from, ' INPUT: ', txInfo.input );
-/*     txInfo.gas;
-    txInfo.from;
-    txInfo.input; */
-    
+var filter = web3.eth.filter({toBlock:'latest'});
 
-  });
+filter.watch(function (error, log) {
+ console.log(log); //  {"address":"0x0000000000000000000000000000000000000000", "data":"0x0000000000000000000000000000000000000000000000000000000000000000", ...}
 });
+
+// get all past logs again.
+var myResults = filter.get(function(error, logs){  });
+// stops and uninstalls the filter
+filter.stopWatching();
 
 
 
