@@ -28,6 +28,9 @@ var options = {
 
  }).catch(e => console.log(e));
 
+
+ web3.eth.getTransaction('0x41432e56d4a5dc30482a1f16a12bc52025c2e544982fa9707d869d31159c9074').then(console.log).catch(e => console.log(e));
+
 }
 
 run();
