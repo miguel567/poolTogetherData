@@ -21,11 +21,11 @@ var options = {
 }
  web3.eth.getPastLogs(options).then((logs)=>{
 /* Store Logs in output file */
-    fs.writeFile('output.json', JSON.stringify(logs) ,function (err) {
+/*     fs.writeFile('output.json', JSON.stringify(logs) ,function (err) {
         if (err) return console.log(err);
         console.log('output created.');
       });
-
+ */
  }).catch(e => console.log(e));
 
 
