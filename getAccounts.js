@@ -5,31 +5,14 @@ const fs = require('fs');
 
 let run = async () => {
 
+    /* Connect to WEB3 */
 var web3 = new Web3 ('wss://mainnet.infura.io/ws/v3/b842c5076ac4499884e201d7948dc9d2');
-/* console.log(eth); */
+/* print out current block */
 web3.eth.getBlockNumber((err,block) => {
     console.log(block);
 })
 
-
-/* var subscription = web3.eth.subscribe('logs', {
-    address: '0x29fe7D60DdF151E5b52e5FAB4f1325da6b2bD958',
-}, function(error, result){
-    if (!error)
-        console.log('results: ', result);
-})
-.on("connected", function(subscriptionId){
-    console.log('subscription ID : ', subscriptionId);
-})
-.on("data", function(log){
-    console.log(log);
-})
-.on("changed", function(log){
-});
-subscription.unsubscribe(function(error, success){
-    if(success)
-        console.log('Successfully unsubscribed!');
-}); */
+/* Get logs fromBLock until current block for contract address */
 var options = {
     fromBlock: 9523259,
     toBlock: 'latest', 
@@ -37,7 +20,7 @@ var options = {
 
 }
  web3.eth.getPastLogs(options).then((logs)=>{
-
+/* Store Logs in output file */
     fs.writeFile('output.json', JSON.stringify(logs) ,function (err) {
         if (err) return console.log(err);
         console.log('output created.');
