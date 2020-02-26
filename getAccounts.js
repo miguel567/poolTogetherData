@@ -30,7 +30,21 @@ var options = {
 /* REQUEST TX DATA from TX hash from BLOCK */
       for( var tx in logs) {
           /* console.log(logs[tx].transactionHash); */
-          web3.eth.getTransaction(logs[tx].transactionHash).then(console.log).catch(e => console.log(e));
+          var txCount = new Map();
+          web3.eth.getTransaction(logs[tx].transactionHash).then((txData) =>{
+            if(txData.s = '0x234409440000000000000000000000000000000000000000000000015af1d78b58c40000'){
+                if(!txCount.has(txData.from)){
+                    txCount.set(txData.from,1);
+
+                } else {
+
+                    txCount.set(txData.from,txCount.get(txData.from)+1);
+                }
+                console.log(txCount.size, ' from: ', txData.from, ' Deposit count: ', txCount.get(txData.from));
+            }
+
+
+          }).catch(e => console.log(e));
 
       }
  }).catch(e => console.log(e));
