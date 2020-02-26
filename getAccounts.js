@@ -20,16 +20,23 @@ var options = {
 
 }
  web3.eth.getPastLogs(options).then((logs)=>{
+     /* var transactions = JSON.stringify(logs); */
 /* Store Logs in output file */
 /*     fs.writeFile('output.json', JSON.stringify(logs) ,function (err) {
         if (err) return console.log(err);
         console.log('output created.');
       });
  */
+/* REQUEST TX DATA from TX hash from BLOCK */
+      for( var tx in logs) {
+          /* console.log(logs[tx].transactionHash); */
+          web3.eth.getTransaction(logs[tx].transactionHash).then(console.log).catch(e => console.log(e));
+
+      }
  }).catch(e => console.log(e));
 
 
- web3.eth.getTransaction('0x41432e56d4a5dc30482a1f16a12bc52025c2e544982fa9707d869d31159c9074').then(console.log).catch(e => console.log(e));
+ /* web3.eth.getTransaction('0x41432e56d4a5dc30482a1f16a12bc52025c2e544982fa9707d869d31159c9074').then(console.log).catch(e => console.log(e)); */
 
 }
 
