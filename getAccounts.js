@@ -23,14 +23,40 @@ var options = {
     topics: [['0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'],null,['0x00000000000000000000000029fe7d60ddf151e5b52e5fab4f1325da6b2bd958']]
 }
 var daiContract = new web3.eth.Contract(daiABI,daiContractAddress);
-console.log(daiContract);
+/* console.log(daiContract); */
 daiContract.getPastEvents('Transfer', options)
 .then(function(events){
-    console.log(events); 
+    /* console.log(events);  */
       fs.writeFile('output.json', JSON.stringify(events) ,function (err) {
         if (err) return console.log(err);
         console.log('output created.');
       });
+    
+
+/* REQUEST TX DATA from TX hash from BLOCK */
+for( var tx in events) {
+    /* console.log(events[tx]); */
+    var txCount = new Map();
+    web3.eth.getTransaction(events[tx].transactionHash).then((txData) =>{
+      console.log('txData', txData);
+      if(txData.input = '0x234409440000000000000000000000000000000000000000000000015af1d78b58c40000' && txData.from != '0x0000000000000000000000000000000000000000'){
+          if(!txCount.has(txData.from)){
+              txCount.set(txData.from,1);
+
+          } else {
+
+              txCount.set(txData.from,txCount.get(txData.from)+1);
+          }
+          console.log(txCount.size, ' from: ', txData.from, ' Deposit count: ', txCount.get(txData.from), 'value: ', web3.utils.toBN(txData.v).toString());
+      }
+
+
+    }).catch(e => console.log(e));
+
+}
+
+
+
  
 }).catch(e => {console.log(e)});
 
