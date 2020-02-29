@@ -39,33 +39,36 @@ daiContract.getPastEvents('Transfer', options)
       }
     
 
-/* REQUEST TX DATA from TX hash from BLOCK */
-for( var tx in events) {
-    /* console.log(events[tx]); */
-    var txCount = new Map();
-    web3.eth.getTransaction(events[tx].transactionHash).then((txData) =>{
-      /* console.log('txData', txData); */
-      if(txData.input = '0x234409440000000000000000000000000000000000000000000000015af1d78b58c40000' && txData.from != '0x0000000000000000000000000000000000000000'){
-          if(!txCount.has(txData.from)){
-              txCount.set(txData.from,1);
+    /* REQUEST TX DATA from TX hash from BLOCK */
+    for( var tx in events) {
+        /* console.log(events[tx]); */
+        var txCount = new Map();
+        web3.eth.getTransaction(events[tx].transactionHash).then((txData) =>{
+        /* console.log('txData', txData.input); */
+        if(txData.input.includes('0x23440944')){
+            var value = web3.utils.fromWei(txHashVal.get(txData.hash),'ether');  
+            if(!txCount.has(txData.from)){
+                txCount.set(txData.from,value);
 
-          } else {
+            } else {
+                var updateValue= parseInt(txCount.get(txData.from))+parseInt(value);
+                txCount.set(txData.from,updateValue);
+            }
+            
+            console.log(txCount.size, 'txHash: ',txData.hash, ' from: ', txData.from, ' Value: ', txCount.get(txData.from));
+        }
+        
 
-              txCount.set(txData.from,txCount.get(txData.from)+1);
-          }
-          var value = txHashVal.get(txData.hash);
-          console.log(txCount.size, ' from: ', txData.from, ' Deposit count: ', txCount.get(txData.from), 'value: ', value);
-      }
+        }).catch(e => console.log(e));
 
-
-    }).catch(e => console.log(e));
-
-}
+    }
+    
+    
 
 
 
  
-}).catch(e => {console.log(e)});
+}).catch(e => {console.log(e).finally(console.log('finished'))});
 
 
 
