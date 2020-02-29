@@ -26,7 +26,12 @@ var daiContract = new web3.eth.Contract(daiABI,daiContractAddress);
 console.log(daiContract);
 daiContract.getPastEvents('Transfer', options)
 .then(function(events){
-    console.log(events); // same results as the optional callback above
+    console.log(events); 
+      fs.writeFile('output.json', JSON.stringify(events) ,function (err) {
+        if (err) return console.log(err);
+        console.log('output created.');
+      });
+ 
 }).catch(e => {console.log(e)});
 
 
