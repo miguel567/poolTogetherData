@@ -31,6 +31,12 @@ daiContract.getPastEvents('Transfer', options)
         if (err) return console.log(err);
         console.log('output created.');
       });
+      var txHashVal = new Map();
+      for (var txhash in events){
+        txHashVal.set(events[txhash].transactionHash,events[txhash].returnValues[2]);
+        /* console.log('Value for this txHash: ' , txHashVal.get(events[txhash].transactionHash)); */
+
+      }
     
 
 /* REQUEST TX DATA from TX hash from BLOCK */
@@ -38,7 +44,7 @@ for( var tx in events) {
     /* console.log(events[tx]); */
     var txCount = new Map();
     web3.eth.getTransaction(events[tx].transactionHash).then((txData) =>{
-      console.log('txData', txData);
+      /* console.log('txData', txData); */
       if(txData.input = '0x234409440000000000000000000000000000000000000000000000015af1d78b58c40000' && txData.from != '0x0000000000000000000000000000000000000000'){
           if(!txCount.has(txData.from)){
               txCount.set(txData.from,1);
@@ -47,7 +53,8 @@ for( var tx in events) {
 
               txCount.set(txData.from,txCount.get(txData.from)+1);
           }
-          console.log(txCount.size, ' from: ', txData.from, ' Deposit count: ', txCount.get(txData.from), 'value: ', web3.utils.toBN(txData.v).toString());
+          var value = txHashVal.get(txData.hash);
+          console.log(txCount.size, ' from: ', txData.from, ' Deposit count: ', txCount.get(txData.from), 'value: ', value);
       }
 
 
