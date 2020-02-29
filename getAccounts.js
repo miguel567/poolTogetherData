@@ -32,7 +32,8 @@ var options = {
           /* console.log(logs[tx].transactionHash); */
           var txCount = new Map();
           web3.eth.getTransaction(logs[tx].transactionHash).then((txData) =>{
-            if(txData.s = '0x234409440000000000000000000000000000000000000000000000015af1d78b58c40000'){
+            /* console.log(txData); */
+            if(txData.input = '0x234409440000000000000000000000000000000000000000000000015af1d78b58c40000'){
                 if(!txCount.has(txData.from)){
                     txCount.set(txData.from,1);
 
@@ -40,7 +41,7 @@ var options = {
 
                     txCount.set(txData.from,txCount.get(txData.from)+1);
                 }
-                console.log(txCount.size, ' from: ', txData.from, ' Deposit count: ', txCount.get(txData.from));
+                console.log(txCount.size, ' from: ', txData.from, ' Deposit count: ', txCount.get(txData.from), 'value: ', web3.utils.toBN(txData.v).toString());
             }
 
 
