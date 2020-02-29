@@ -38,24 +38,26 @@ daiContract.getPastEvents('Transfer', options)
 
       }
     
-
+      var totalValue = 0;
     /* REQUEST TX DATA from TX hash from BLOCK */
     for( var tx in events) {
         /* console.log(events[tx]); */
+        
         var txCount = new Map();
         web3.eth.getTransaction(events[tx].transactionHash).then((txData) =>{
         /* console.log('txData', txData.input); */
         if(txData.input.includes('0x23440944')){
             var value = web3.utils.fromWei(txHashVal.get(txData.hash),'ether');  
             if(!txCount.has(txData.from)){
-                txCount.set(txData.from,value);
+                txCount.set(txData.from,parseInt(value));
 
             } else {
                 var updateValue= parseInt(txCount.get(txData.from))+parseInt(value);
                 txCount.set(txData.from,updateValue);
             }
             
-            console.log(txCount.size, 'txHash: ',txData.hash, ' from: ', txData.from, ' Value: ', txCount.get(txData.from));
+            totalValue = parseInt(value) + parseInt(totalValue);
+            console.log(txCount.size, 'txHash: ',txData.hash, ' from: ', txData.from, ' Value: ', txCount.get(txData.from), 'Total Value:', totalValue);
         }
         
 
