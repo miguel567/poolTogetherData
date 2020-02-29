@@ -14,13 +14,16 @@ web3.eth.getBlockNumber((err,block) => {
 
 /* Get logs fromBLock until current block for contract address */
 var options = {
-    fromBlock: 9523259,
+    fromBlock: 9577730,
     toBlock: 'latest', 
-    address: ['0x29fe7D60DdF151E5b52e5FAB4f1325da6b2bD958']
+    address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+    topics: ['0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef']
 
 }
+
  web3.eth.getPastLogs(options).then((logs)=>{
      /* var transactions = JSON.stringify(logs); */
+     console.log(logs);
 /* Store Logs in output file */
 /*     fs.writeFile('output.json', JSON.stringify(logs) ,function (err) {
         if (err) return console.log(err);
@@ -28,8 +31,8 @@ var options = {
       });
  */
 /* REQUEST TX DATA from TX hash from BLOCK */
-      for( var tx in logs) {
-          /* console.log(logs[tx].transactionHash); */
+/*       for( var tx in logs) {
+          
           var txCount = new Map();
           web3.eth.getTransaction(logs[tx].transactionHash).then((txData) =>{
             if(txData.s = '0x234409440000000000000000000000000000000000000000000000015af1d78b58c40000'){
@@ -46,7 +49,7 @@ var options = {
 
           }).catch(e => console.log(e));
 
-      }
+      } */
  }).catch(e => console.log(e));
 
 
